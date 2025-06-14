@@ -1,25 +1,27 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-
+require("dotenv").config()
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.get('/hello', (req, res) => {
+  res.send('Xin chào! Đây là phản hồi dạng text từ server.');
+});
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, message } = req.body;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "your_gmail@gmail.com",        // bạn cần bật quyền "Ứng dụng kém bảo mật" hoặc dùng App Password
-      pass: "your_app_password",
+        user: process.env.EMAIL,      
+        pass: process.env.APP_PASS,
     },
   });
 
   try {
     await transporter.sendMail({
-      from: `"Website Contact" <your_gmail@gmail.com>`,
+      from: `"Website Contact" <${process.env.EMAIL}>`,
       to: "iamhaupv@gmail.com",
       subject: "Yêu cầu tư vấn mới từ website",
       html: `
