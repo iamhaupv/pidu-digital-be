@@ -5,7 +5,7 @@ require("dotenv").config()
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.get('/hello', (req, res) => {
+app.get('/api/hello', (req, res) => {
   res.send('Xin chào! Đây là phản hồi dạng text từ server.');
 });
 app.post("/api/contact", async (req, res) => {
